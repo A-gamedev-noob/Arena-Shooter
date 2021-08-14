@@ -10,6 +10,8 @@ public class Health : MonoBehaviour, IInteractions
     public string selfTag;
     Color originalColor;
 
+    [SerializeField] GameObject deathVfx;
+
     void Start()
     {
         spriteRender = GetComponent<SpriteRenderer>();
@@ -44,6 +46,8 @@ public class Health : MonoBehaviour, IInteractions
     }
 
     public void Death(){
+        GameObject Vfx = Instantiate(deathVfx,transform.position,Quaternion.identity);
+        Vfx.GetComponent<ParticleSystem>().Play();
         Destroy(gameObject);
     }
 

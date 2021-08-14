@@ -76,10 +76,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bca3ac2431212e444b032c78c57b36a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  recoil: 0
   barrels:
   - {fileID: 6573200757517392781}
   shakeMagnitude: 1.2
+  currentWeapon: {fileID: 0}
+  audioSource: {fileID: 0}
 --- !u!82 &4915667788541673903
 AudioSource:
   m_ObjectHideFlags: 0
@@ -201,7 +202,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6573200758348666750}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.776, y: 0.015999999, z: 0.29085547}
+  m_LocalPosition: {x: 0.8, y: 0, z: 0.29085547}
   m_LocalScale: {x: 0.37171474, y: 0.37171474, z: 0.37171474}
   m_Children: []
   m_Father: {fileID: 6573200758038378066}

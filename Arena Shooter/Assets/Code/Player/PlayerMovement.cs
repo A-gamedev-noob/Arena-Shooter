@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody2D rb;
     Vector2 direction;
     Vector2 lookDirection;
+    bool dynamic = true;
 
     [Header("Debug")]
     public Text debugText;
@@ -60,15 +61,35 @@ public class PlayerMovement : MonoBehaviour
         if(lookJoystick.Direction != Vector2.zero)
             lookDirection = lookJoystick.Direction;
 
-        if(lookJoystick.Direction.magnitude >= shootSensetivity)
+        if(lookJoystick.Direction.magnitude >= shootSensetivity){
+            PushBack(weaponManager.currentweapon.recoil);
             weaponManager.StartShooting();
+        }
         
         transform.right = lookDirection;
     }
 
-    void Movement(){   
-        rb.velocity = direction * speed;
+    public void Movement(){   
+        if(direction.magnitude != 0f){
+            rb.velocity = direction  * speed;
+            dynamic = false;
+        }
+        else if(direction.magnitude == 0f && !dynamic){
+            rb.velocity = direction * 0f;
+            dynamic = true;
+        }
     }
 
+    public void PushBack(float amount){
+        Vector2 forceDir = transform.right * amount * -1;
+        rb.velocity = forceDir;
+        // StopCoroutine(StopPlayer());
+        StartCoroutine(StopPlayer());
+    }
+
+    IEnumerator StopPlayer(){
+        yield return new WaitForSeconds(0.1f);
+        dynamic = false;
+    }
 
 }

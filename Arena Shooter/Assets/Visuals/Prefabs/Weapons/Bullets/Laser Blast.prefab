@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 915470291983790186}
   - component: {fileID: 3878534067028748264}
   m_Layer: 0
-  m_Name: Small bullet
+  m_Name: Laser Blast
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 2192508494377811425}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.20118116, y: 0.12551402, z: 0.20451}
+  m_LocalScale: {x: 0.6136025, y: 0.12551402, z: 0.20451}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.06140977, g: 0.34439725, b: 0.5660378, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -219,7 +219,7 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 0.8117647}
+      key0: {r: 0, g: 0.5568628, b: 0.9960785, a: 0.8117647}
       key1: {r: 1, g: 1, b: 1, a: 0.46666667}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}

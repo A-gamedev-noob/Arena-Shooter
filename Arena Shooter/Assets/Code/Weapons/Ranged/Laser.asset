@@ -13,11 +13,15 @@ MonoBehaviour:
   m_Name: Laser
   m_EditorClassIdentifier: 
   gunName: Laser
-  damage: 20
+  damage: 40
+  travelSpeed: 50
   range: 1000
-  fireRate: 0
-  recoil: 0
+  fireRate: 0.7
+  recoil: 3
   spread: 0
+  accuracy: 1
   AOE: 0
-  bullet: {fileID: 0}
+  permeation: 3
+  bullet: {fileID: 2192508494377811425, guid: 95c5f21cd6dcd5647b42f14a32a25da2, type: 3}
   gunBody: {fileID: 1741293997429172706, guid: 35d5fdd470bd53044aa18f6f85bd87d3, type: 3}
+  audioClip: {fileID: 8300000, guid: 0674b202bbaeed3439cc69259735c60e, type: 3}

@@ -5,27 +5,27 @@ using UnityEngine;
 public class WeaponManager : MonoBehaviour
 {
     [SerializeField] RangedWeaponsScriptable startingWeapon;
-    RangedWeaponsScriptable currentweapon;
-    GameObject currentWeaponBody;
+    public RangedWeaponsScriptable Weapon2;
+    [HideInInspector]public RangedWeaponsScriptable currentweapon;
+    public GameObject currentWeaponBody;
     GameObject weaponHolster;
     Gun gun;
+    PlayerMovement ply;
 
     private void Awake() {
         FindWeaponHolster();
         PlaceWeapon(startingWeapon);
-        gun = currentWeaponBody.GetComponent<Gun>();
+        ply = GetComponent<PlayerMovement>();
     }
 
-    private void Update() {
-        if(Input.GetKeyDown(KeyCode.Space)){
-            PlaceWeapon(startingWeapon);
-        }
-        if(Input.GetKeyDown(KeyCode.Q)){
-            RemoveCurrentWeapon();
+    void Update() {
+        if(Input.GetKeyDown(KeyCode.R)){
+            ChooseWeapon();
         }
     }
 
     public void StartShooting(){
+        ply.PushBack(currentweapon.recoil);
         gun.Shoot();
     }
 
@@ -43,22 +43,23 @@ public class WeaponManager : MonoBehaviour
     void PlaceWeapon(RangedWeaponsScriptable weapon){
         RemoveCurrentWeapon();
         currentweapon = weapon;
-        Quaternion angle = Quaternion.Euler(transform.right);
         GameObject gO = Instantiate(weapon.gunBody,transform.position,Quaternion.identity);
         gO.transform.rotation = transform.rotation;
         gO.transform.parent = weaponHolster.transform;
         currentWeaponBody = gO;
+        gun = currentWeaponBody.GetComponent<Gun>();
         currentWeaponBody.GetComponent<Gun>().SetAttributes(weapon);
         currentWeaponBody.GetComponent<Gun>().SetTag("Friendly");
     }
 
-    void RemoveCurrentWeapon(){for (int x = 0; x < transform.childCount; x++){
-            if (transform.GetChild(x).name == "Weapon")
-            { 
-                Destroy(transform.GetChild(x).transform.GetChild(0).gameObject);
-                return;
-            }
-        }
+    void RemoveCurrentWeapon(){
+        Destroy(currentWeaponBody);
+    }
+
+    void ChooseWeapon(){
+        RangedWeaponsScriptable temp = Weapon2;
+        Weapon2 = startingWeapon;
+        PlaceWeapon(temp);
     }
 
     public RangedWeaponsScriptable GetCurrentWeapon(){

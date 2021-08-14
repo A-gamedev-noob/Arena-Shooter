@@ -5,13 +5,7 @@ using EZCameraShake;
 
 public class Gun : MonoBehaviour
 {
-    string gunName;
-    float damage;
-    float range;
-    float fireRate;
-    public float recoil;
-    float spread;
-    float AOE;
+
     GameObject bullet;
     [SerializeField] Transform[] barrels;
     [Range(1,10f)]
@@ -20,43 +14,40 @@ public class Gun : MonoBehaviour
 
     float time;
 
-    RangedWeaponsScriptable currentWeapon;
+    public RangedWeaponsScriptable currentWeapon;
     WeaponManager weaponManager;
     public AudioSource audioSource;
 
     string bulletTag;
 
+    Color color;
+
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
         audioSource.volume = 0.5f;
+        
     }
 
     private void Update() {
         time += Time.deltaTime;
+        if(Input.GetKeyDown(KeyCode.E))
+            Shoot();
     }
 
     public void SetAttributes(RangedWeaponsScriptable weaponsScriptable){
 
         currentWeapon = weaponsScriptable;
-
-        gunName = weaponsScriptable.gunName;
-        damage = weaponsScriptable.damage;
-        range = weaponsScriptable.range;
-        fireRate = weaponsScriptable.fireRate;
-        recoil = weaponsScriptable.recoil;
-        spread = weaponsScriptable.spread;
-        AOE = weaponsScriptable.AOE;
-        bullet = weaponsScriptable.bullet;
-        audioSource.clip = weaponsScriptable.audioClip;
+        audioSource.clip = currentWeapon.audioClip;
     } 
 
     public void Shoot(){
-        if(time>=fireRate){
+        if(time>=currentWeapon.fireRate){
+            // SetSpread();
             GameObject bullet;
             foreach(Transform barrel in barrels){
-                bullet = Instantiate(currentWeapon.bullet, barrels[0].position, barrel.rotation);
-                bullet.GetComponent<Bullet>().InitializeProperties(currentWeapon,barrel.right, bulletTag);
+                bullet = Instantiate(currentWeapon.bullet, transform.position, barrel.rotation);
+                bullet.GetComponent<Bullet>().InitializeProperties(currentWeapon,BulletDirection(barrel), bulletTag, color);
                 bullet.transform.parent = BulletManager.Instance.transform;
 
             }
@@ -67,12 +58,24 @@ public class Gun : MonoBehaviour
 
     }
 
+    Vector2 BulletDirection(Transform barrel){
+        float error = Random.Range(0f,1);
+        print(error);
+        Vector2 spreadDirection = barrel.right;
+        if(error>currentWeapon.accuracy){
+            color = Color.red;
+            float spreadAmmount = Random.Range(-currentWeapon.spread,currentWeapon.spread);
+            spreadDirection += new Vector2(spreadDirection.x+spreadAmmount, spreadDirection.y+spreadAmmount);
+        }
+        return spreadDirection;
+    }
+
     public void SetTag(string tg){
         bulletTag = tg;
     }
 
     void ShakeCamera(){
-        CameraShaker.Instance.ShakeOnce((recoil+1)*shakeMagnitude, 2f, 0f, 0.1f);
+        CameraShaker.Instance.ShakeOnce((currentWeapon.recoil+1)*shakeMagnitude, 2f, 0f, 0.1f);
     }
 
 }
